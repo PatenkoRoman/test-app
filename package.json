@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "test",
+    "test": "nyc --reporter=html mocha",
     "start": "nodemon index.js"
   },
   "author": "",
@@ -12,8 +12,11 @@
   "dependencies": {
     "amqplib": "^0.5.5",
     "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
     "express": "^4.17.1",
+    "mocha": "^6.2.2",
     "node-tesseract-ocr": "^1.0.0",
+    "nyc": "^14.1.1",
     "request": "^2.88.0"
   }
 }

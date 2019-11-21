@@ -19,7 +19,7 @@ const createTask = (data) => {
     });
 };
 
-const createQueueWorker = () => {
+const createQueueWorker = (workerPath) => {
   return amqp.connect(config.RABBIT.URI)
     .then(connection => connection.createChannel())
     .then(channel => {
@@ -34,12 +34,10 @@ const createQueueWorker = () => {
           console.log(` [x] Received: `, msg.content.toString());
           console.log(" [x] Done");
           
-          const worker = new Worker('./worker.js', { workerData: msg.content.toString() });
-          worker.on('message', (isOk) => { 
-            console.log(isOk); 
-            if (isOk === 'OK') { 
-              channel.ack(msg);
-            }
+          const worker = new Worker(workerPath, { workerData: msg.content.toString() });
+          worker.on('message', (result) => { 
+            console.log(result);
+            channel.ack(msg);
           });
       }, {
           noAck: false

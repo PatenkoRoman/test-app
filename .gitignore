@@ -1,2 +1,4 @@
 node_modules
 image.jpg
+.nyc_output
+coverage
