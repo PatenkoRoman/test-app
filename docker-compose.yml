@@ -1,0 +1,22 @@
+version: '2'
+networks:
+  app-tier:
+    driver: bridge
+services:
+  rabbitmq:
+    image: 'rabbitmq:3'
+    volumes:
+      - 'rabbitmq_data:/bitnami'
+    networks:
+      - app-tier
+  server:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      RABBIT_URL: amqp://rabbitmq
+    networks:
+      - app-tier
+volumes:
+  rabbitmq_data:
+    driver: local
