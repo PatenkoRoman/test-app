@@ -3,6 +3,7 @@ const config = require('./config');
 const { Worker } = require('worker_threads');
 
 const createTask = (data) => {
+  console.log('kek');
   return amqp.connect(config.RABBIT.URI)
     .then(connection => connection.createChannel())
     .then(channel => {

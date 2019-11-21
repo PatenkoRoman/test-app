@@ -11,7 +11,6 @@ app.get('/', (req, res) => {
 
 app.post('/image', (req, res) => {
   const fileUrl = req.body.fileUrl;
-
   rabbitmq.createTask(fileUrl);
 	res.json(req.body);
 });
@@ -20,4 +19,8 @@ app.listen(3000, function () {
   console.log('Example app listening on port 3000!');
 });
 
-rabbitmq.createQueueWorker('./worker.js');
+if(process.env.NODE_ENV !== 'test') {
+  rabbitmq.createQueueWorker('./worker.js');
+};
+
+module.exports = { app };
